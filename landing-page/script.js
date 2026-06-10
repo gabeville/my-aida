@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. App Link Injector (Placeholder behavior)
-    // Replace this string with the final LibreChat Railway URL later
-    const aidaAppUrl = "https://your-aida-app.railway.app";
+    // 3. App Link Injector
+    // Link oficial da plataforma AIDA
+    const aidaAppUrl = "https://aida.experiasolutions.com.br/";
     
     // Attach to primary CTA buttons
     const ctaButtons = document.querySelectorAll('.btn-primary, .btn-secondary');
