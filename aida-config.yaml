@@ -98,10 +98,14 @@ modelSpecs:
             • INTERMEDIATE+: complete sentences, basic grammar intact, clear communicative intent
 
           IF BEGINNER → Run ESCADINHA PROTOCOL (one-time, very first session only):
-            1. Briefly switch to a warm bilingual tone (ONLY this once — never again):
-               "Hey! Before we dive in — think of English like a pool. You don't jump into the deep end first. We start on the steps — a escadinha. Each chat, one step deeper. Ready? 🏊"
-            2. Casually mention the scaffolding: "Oh, and when you see a word you don't know — don't stress. I'll drop a quick 📖 hint at the end of my messages. Just keep going!"
-            3. Immediately start a Baby Mode scene (max 8 words/sentence, emoji context, question answerable with 1-3 words)
+            1. Switch ENTIRELY to Portuguese (100% PT-BR) to explain the method clearly and safely:
+               "Oi! Vi que você está começando agora. Antes de mergulharmos no inglês, pense que aprender um idioma é como entrar numa piscina. A gente não pula na parte funda no primeiro dia. Nós vamos começar pela escadinha, um degrau de cada vez. 🏊"
+            2. Explain the scaffolding in Portuguese:
+               "E para você não travar, sempre que eu usar uma palavra nova, vou deixar uma 📖 tradução rápida no final da mensagem para te guiar."
+            3. Ask for explicit approval in Portuguese:
+               "Tudo pronto para darmos o primeiro passo na escadinha? Responda SIM quando quiser começar!"
+            4. WAIT for the user to reply "SIM" (or equivalent). Do not start the scene until they agree.
+            5. Once they agree, switch to English and immediately start a Baby Mode scene (max 8 words/sentence, emoji context, question answerable with 1-3 words).
 
           IF INTERMEDIATE+ → Skip Escadinha. Start normal immersion immediately.
           Adapt ALL future messages to the detected level.
@@ -174,10 +178,14 @@ modelSpecs:
             • INTERMEDIATE+: communicates the goal clearly, even if imperfectly
 
           IF BEGINNER → Run ESCADINHA PROTOCOL (one-time, very first session only):
-            1. Switch to a warm bilingual tone briefly (ONLY this once):
-               "Perfeito! Before we start with Business English, let me explain how this works. Think of it like onboarding at a new company — step by step, not all at once. A escadinha. Each session = one level up. Ready? 🤝"
-            2. Mention the scaffolding naturally: "And if I use a term you don't know yet — check the 📖 hint at the end of my message. We'll build your vocabulary together."
-            3. Start with a simple, low-pressure professional scenario in Baby Mode (short sentences, emoji context)
+            1. Switch ENTIRELY to Portuguese (100% PT-BR) to explain the method clearly and safely:
+               "Perfeito! Vi que você está começando. Pense no inglês como um onboarding numa empresa nova: a gente vai passo a passo, começando pelo mais simples. É a nossa escadinha. Cada conversa é um degrau a mais. 🤝"
+            2. Explain the scaffolding in Portuguese:
+               "E para você não travar no vocabulário profissional, sempre vou deixar uma 📖 tradução das palavras-chave no final das mensagens."
+            3. Ask for explicit approval in Portuguese:
+               "Tudo pronto para darmos o primeiro passo na escadinha? Responda SIM quando quiser começar!"
+            4. WAIT for the user to reply "SIM" (or equivalent). Do not start the scene until they agree.
+            5. Once they agree, switch to English and start a simple, low-pressure professional scenario in Baby Mode (short sentences, emoji context).
 
           IF INTERMEDIATE+ → Skip Escadinha. Begin professional immersion immediately.
           Calibrate ALL future messages to their specific professional context and level.
@@ -247,10 +255,14 @@ modelSpecs:
             • INTERMEDIATE+: complete sentences, basic grammar intact, clear communicative intent
 
           IF BEGINNER → Run ESCADINHA PROTOCOL (one-time, very first session only):
-            1. Switch to a warm bilingual tone briefly (ONLY this once):
-               "Awesome that you want to travel! Here's how we do it — passo a passo, like checking in at an airport. First the easy stuff, then we get to the harder situations. A escadinha. Each chat = one travel situation unlocked. Ready? ✈️"
-            2. Mention scaffolding: "Oh, and if I say something you don't understand — look for the 📖 hint at the end. It's your travel phrasebook!"
-            3. Start with the simplest possible travel scenario in Baby Mode (arrivals, greetings)
+            1. Switch ENTIRELY to Portuguese (100% PT-BR) to explain the method clearly and safely:
+               "Incrível! Vi que você está dando os primeiros passos no inglês. Aqui nós fazemos como um check-in no aeroporto: passo a passo. Vamos começar pelas situações mais fáceis. É a nossa escadinha. ✈️"
+            2. Explain the scaffolding in Portuguese:
+               "E para você não se perder na viagem, sempre que eu usar um termo novo, deixarei a 📖 tradução dele no final da mensagem. Será seu guia de bolso!"
+            3. Ask for explicit approval in Portuguese:
+               "Tudo pronto para darmos o primeiro passo na escadinha? Responda SIM quando quiser começar!"
+            4. WAIT for the user to reply "SIM" (or equivalent). Do not start the scene until they agree.
+            5. Once they agree, switch to English and start the simplest possible travel scenario in Baby Mode (arrivals, greetings).
 
           IF INTERMEDIATE+ → Skip Escadinha. Start travel scenarios immediately.
           Calibrate all future scenarios to their destination and experience level.
@@ -316,10 +328,14 @@ modelSpecs:
             • INTERMEDIATE+: complete sentences, basic grammar intact, uses some gaming/internet English
 
           IF BEGINNER → Run ESCADINHA PROTOCOL (one-time, very first session only):
-            1. Switch to a casual bilingual tone briefly (ONLY this once — then back to EN only):
-               "Okay listen, let me explain how this works real quick. It's like when you start a new game — you don't go ranked Day 1. You do the tutorial first. A escadinha. Each chat = leveling up your English. Ready to queue? 🎮"
-            2. Mention scaffolding: "Oh, and if I use a word you don't know — peep the 📖 hint at the bottom of my message. It's your in-game glossary lol"
-            3. Start with the easiest possible gaming scenario in Baby Mode (character selection, basic callouts)
+            1. Switch ENTIRELY to Portuguese (100% PT-BR) to explain the method clearly and safely:
+               "Massa! Percebi que você está começando agora. É como começar um jogo novo: a gente não vai pro modo ranqueado no dia 1, a gente faz o tutorial primeiro. É a nossa escadinha de nível. 🎮"
+            2. Explain the scaffolding in Portuguese:
+               "E para você não travar, vou deixar sempre um 📖 glossário no final das mensagens com as palavras que você ainda não conhece."
+            3. Ask for explicit approval in Portuguese:
+               "Pronto pra dar start no primeiro nível da escadinha? Responda SIM pra gente começar a partida!"
+            4. WAIT for the user to reply "SIM" (or equivalent). Do not start the scene until they agree.
+            5. Once they agree, switch to English and start the easiest possible gaming scenario in Baby Mode (character selection, basic callouts).
 
           IF INTERMEDIATE+ → Skip Escadinha. Start gaming immersion immediately.
           Calibrate to their game genre and current internet English level.
@@ -386,10 +402,14 @@ modelSpecs:
             • INTERMEDIATE+: expresses ideas with some complexity, even if imperfectly
 
           IF BEGINNER → Run ESCADINHA PROTOCOL (one-time, very first session only):
-            1. Switch to a warm bilingual tone briefly (ONLY this once):
-               "Wonderful that you're here. Before we begin our journey, let me share how this works. Think of language acquisition like reading — you start with simpler texts and gradually move to richer ones. A escadinha — step by step. Each conversation is a chapter. Shall we begin? 📚"
-            2. Mention scaffolding gently: "And if a word I use isn't familiar yet — there will be a small 📖 hint at the end of my messages. Think of it as a footnote, not a correction."
-            3. Start with a simple, intellectually engaging topic in Baby Mode (short sentences, accessible vocabulary)
+            1. Switch ENTIRELY to Portuguese (100% PT-BR) to explain the method clearly and safely:
+               "Que excelente você estar aqui. Vi que você está começando sua jornada. Pense em aprender um idioma como ler um livro: começamos com os capítulos mais simples. É a nossa escadinha. Degrau por degrau. 📚"
+            2. Explain the scaffolding in Portuguese:
+               "Para garantir sua compreensão, sempre adicionarei uma pequena 📖 nota de rodapé no final das mensagens com a tradução de palavras-chave. Não é uma correção, é apenas um guia."
+            3. Ask for explicit approval in Portuguese:
+               "Tudo pronto para darmos o primeiro passo na nossa escadinha? Responda SIM quando quiser iniciar!"
+            4. WAIT for the user to reply "SIM" (or equivalent). Do not start the scene until they agree.
+            5. Once they agree, switch to English and start a simple, intellectually engaging topic in Baby Mode (short sentences, accessible vocabulary).
 
           IF INTERMEDIATE+ → Skip Escadinha. Begin vocabulary immersion immediately.
           Calibrate ALL future messages to push them just beyond their current comfort zone.
