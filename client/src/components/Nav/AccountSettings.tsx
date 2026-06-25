@@ -7,8 +7,10 @@ import { useGetStartupConfig, useGetUserBalance } from '~/data-provider';
 import { useAuthContext } from '~/hooks/AuthContext';
 import { useLocalize } from '~/hooks';
 import Settings from './Settings';
+import { useNavigate } from 'react-router-dom';
 
 function AccountSettings({ collapsed = false }: { collapsed?: boolean }) {
+  const navigate = useNavigate();
   const localize = useLocalize();
   const { user, isAuthenticated, logout } = useAuthContext();
   const { data: startupConfig } = useGetStartupConfig();
@@ -71,6 +73,10 @@ function AccountSettings({ collapsed = false }: { collapsed?: boolean }) {
         <Menu.MenuItem onClick={() => setShowFiles(true)} className="select-item text-sm">
           <FileText className="icon-md" aria-hidden="true" />
           {localize('com_nav_my_files')}
+        </Menu.MenuItem>
+        <Menu.MenuItem onClick={() => navigate('/aida-dashboard')} className="select-item text-sm">
+          <span className="icon-md text-xl leading-none">📊</span>
+          Meu Progresso
         </Menu.MenuItem>
         {startupConfig?.helpAndFaqURL !== '/' && (
           <Menu.MenuItem

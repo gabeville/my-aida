@@ -29,6 +29,7 @@ const { getStrategyFunctions } = require('~/server/services/Files/strategies');
 const { logViolation } = require('~/cache');
 const TextStream = require('./TextStream');
 const db = require('~/models');
+const GamificationService = require('~/server/services/GamificationService');
 
 class BaseClient {
   constructor(apiKey, options = {}) {
@@ -802,6 +803,12 @@ class BaseClient {
       },
       { context: 'api/app/clients/BaseClient.js - saveMessageToDatabase #saveMessage' },
     );
+
+    if (savedMessage && !savedMessage.isCreatedByUser) {
+      GamificationService.processMessage(savedMessage).catch(err => {
+        logger.error('[GamificationService] Failed to process message', err);
+      });
+    }
 
     if (this.skipSaveConvo) {
       return { message: savedMessage };
