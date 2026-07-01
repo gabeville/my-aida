@@ -23,6 +23,9 @@ const checkBan = require('./checkBan');
 const noIndex = require('./noIndex');
 const roles = require('./roles');
 
+const requireDemoAuth = require('./requireDemoAuth');
+const demoMessageLimiter = require('./demoMessageLimiter');
+
 module.exports = {
   ...abortMiddleware,
   ...validate,
@@ -37,6 +40,8 @@ module.exports = {
   moderateText,
   validateModel,
   requireJwtAuth,
+  requireDemoAuth,
+  demoMessageLimiter,
   setTwoFactorTempUser,
   checkInviteUser,
   requireLdapAuth,

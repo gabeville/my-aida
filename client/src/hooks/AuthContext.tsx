@@ -25,6 +25,7 @@ import {
   useLoginUserMutation,
   useLogoutUserMutation,
   useRefreshTokenMutation,
+  useDemoLoginMutation,
 } from '~/data-provider';
 import { TAuthConfig, TUserContext, TAuthContext, TResError } from '~/common';
 import { SESSION_KEY, isSafeRedirect, getPostLoginRedirect } from '~/utils';
@@ -155,6 +156,31 @@ const AuthContextProvider = ({
   });
   const refreshToken = useRefreshTokenMutation();
 
+  const demoLogin = useDemoLoginMutation({
+    onSuccess: (data) => {
+      setError(undefined);
+      const demoUser = {
+        id: `demo-${data.token.slice(0, 8)}`,
+        _id: `demo-${data.token.slice(0, 8)}`,
+        name: 'Demo User',
+        email: 'demo@example.com',
+        isDemo: true,
+        role: 'USER',
+        username: 'demo',
+      };
+      setUserContext({ 
+        token: data.token, 
+        isAuthenticated: true, 
+        user: demoUser as unknown as t.TUser,
+        redirect: '/c/new' 
+      });
+    },
+    onError: (error) => {
+      const resError = error as TResError;
+      doSetError(resError.message);
+    },
+  });
+
   const logout = useCallback(
     (redirect?: string) => {
       if (redirect) {
@@ -165,7 +191,8 @@ const AuthContextProvider = ({
     [logoutUser],
   );
 
-  const userQuery = useGetUserQuery({ enabled: !!(token ?? '') });
+  const isDemoUser = !!user?.isDemo;
+  const userQuery = useGetUserQuery({ enabled: !!(token ?? '') && !isDemoUser });
 
   const login = (data: t.TLoginUser) => {
     loginUser.mutate(data);
@@ -225,6 +252,10 @@ const AuthContextProvider = ({
     if (isExternalRedirectRef.current) {
       return;
     }
+    if (isDemoUser) {
+      // For demo users, don't fetch user data
+      return;
+    }
     if (userQuery.data) {
       setUser(userQuery.data);
     } else if (userQuery.isError) {
@@ -248,6 +279,7 @@ const AuthContextProvider = ({
     navigate,
     silentRefresh,
     setUserContext,
+    isDemoUser,
   ]);
 
   useEffect(() => {
@@ -267,12 +299,17 @@ const AuthContextProvider = ({
     };
   }, [setUserContext, user]);
 
+  const demoLoginFn = useCallback(() => {
+    demoLogin.mutate(undefined);
+  }, [demoLogin]);
+
   const memoedValue = useMemo(
     () => ({
       user,
       token,
       error,
       login,
+      demoLogin: demoLoginFn,
       logout,
       setError,
       roles: {
@@ -293,6 +330,10 @@ const AuthContextProvider = ({
       isCustomRole,
       userRoleName,
       customRole,
+      login,
+      demoLoginFn,
+      logout,
+      setError,
     ],
   );
 

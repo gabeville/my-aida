@@ -6,6 +6,7 @@ const {
   resolveBuildInfo,
   resolveTitleTiming,
   sanitizeModelSpecs,
+  demoSessionManager,
 } = require('@librechat/api');
 const { EModelEndpoint, defaultSocialLogins } = require('librechat-data-provider');
 const { logger, getTenantId, SystemCapabilities } = require('@librechat/data-schemas');
@@ -101,6 +102,8 @@ function buildPreLoginPayload() {
   if (ldap) {
     payload.ldap = ldap;
   }
+
+  payload.demoModeEnabled = demoSessionManager.isEnabled();
 
   return payload;
 }

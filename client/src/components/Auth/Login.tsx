@@ -17,7 +17,7 @@ interface LoginLocationState {
 function Login() {
   const localize = useLocalize();
   const { showToast } = useToastContext();
-  const { error, setError, login } = useAuthContext();
+  const { error, setError, login, demoLogin } = useAuthContext();
   const { startupConfig } = useOutletContext<TLoginLayoutContext>();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -120,6 +120,16 @@ function Login() {
             {localize('com_auth_sign_up')}
           </a>
         </p>
+      )}
+      {startupConfig?.demoModeEnabled === true && (
+        <div className="my-4 text-center">
+          <button
+            onClick={demoLogin}
+            className="inline-flex items-center justify-center rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+          >
+            Try Demo
+          </button>
+        </div>
       )}
     </>
   );

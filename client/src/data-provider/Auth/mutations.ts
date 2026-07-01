@@ -180,3 +180,54 @@ export const useVerifyTwoFactorTempMutation = (
     },
   );
 };
+
+interface DemoSessionResponse {
+  success: boolean;
+  token: string;
+  expiresAt: string;
+  maxMessages: number;
+  remainingMessages: number;
+}
+
+export const useDemoLoginMutation = (
+  options?: t.MutationOptions<DemoSessionResponse, undefined, unknown, unknown>,
+): UseMutationResult<DemoSessionResponse, unknown, undefined, unknown> => {
+  const queryClient = useQueryClient();
+  const clearStates = useClearStates();
+  const resetDefaultPreset = useResetRecoilState(store.defaultPreset);
+  const setQueriesEnabled = useSetRecoilState<boolean>(store.queriesEnabled);
+  
+  return useMutation({
+    mutationFn: async () => {
+      const response = await fetch('/api/auth/demo', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to create demo session');
+      }
+      
+      return response.json();
+    },
+    ...(options || {}),
+    onMutate: (vars) => {
+      setQueriesEnabled(false);
+      resetDefaultPreset();
+      clearStates();
+      queryClient.removeQueries();
+      options?.onMutate?.(vars);
+    },
+    onSuccess: (...args) => {
+      options?.onSuccess?.(...args);
+    },
+    onError: (...args) => {
+      setQueriesEnabled(true);
+      options?.onError?.(...args);
+    },
+  });
+};

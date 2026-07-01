@@ -1,5 +1,5 @@
 const express = require('express');
-const { createSetBalanceConfig, forceRefreshCloudFrontAuthCookies } = require('@librechat/api');
+const { createSetBalanceConfig, forceRefreshCloudFrontAuthCookies, demoSessionManager } = require('@librechat/api');
 const {
   resetPasswordRequestController,
   resetPasswordController,
@@ -99,5 +99,42 @@ router.post('/2fa/disable', middleware.requireJwtAuth, disable2FA);
 router.post('/2fa/backup/regenerate', middleware.requireJwtAuth, regenerateBackupCodes);
 
 router.get('/graph-token', middleware.requireJwtAuth, graphTokenController);
+
+router.post('/demo', async (req, res) => {
+  if (!demoSessionManager.isEnabled()) {
+    return res.status(403).json({ message: 'Demo mode is not enabled' });
+  }
+
+  try {
+    const ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || 
+               (req.connection.socket ? req.connection.socket.remoteAddress : null);
+    const session = await demoSessionManager.createSession(ip);
+
+    const config = demoSessionManager.getConfig();
+    const expiresInMs = config.expiryHours * 60 * 60 * 1000;
+    
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: expiresInMs,
+      sameSite: 'strict',
+    };
+
+    res.cookie('demo_token', session.token, cookieOptions);
+    res.json({
+      success: true,
+      token: session.token,
+      expiresAt: session.expiresAt,
+      maxMessages: config.maxMessages,
+      remainingMessages: config.maxMessages,
+    });
+  } catch (error) {
+    console.error('Demo session creation error:', error);
+    if (error.message.includes('Too many demo sessions')) {
+      return res.status(429).json({ message: error.message });
+    }
+    res.status(500).json({ message: 'Failed to create demo session' });
+  }
+});
 
 module.exports = router;

@@ -1,11 +1,13 @@
 const express = require('express');
-const { isEnabled, GenerationJobManager, hasPersistableAbortContent } = require('@librechat/api');
+const { isEnabled, GenerationJobManager, hasPersistableAbortContent, demoSessionManager } = require('@librechat/api');
 const { createSseStreamTelemetry } = require('@librechat/api/telemetry');
 const { logger } = require('@librechat/data-schemas');
 const {
   uaParser,
   checkBan,
   requireJwtAuth,
+  requireDemoAuth,
+  demoMessageLimiter,
   messageIpLimiter,
   configMiddleware,
   messageUserLimiter,
@@ -25,6 +27,45 @@ function hasTenantMismatch(job, user) {
 
 const router = express.Router();
 
+const optionalDemoAuth = async (req, res, next) => {
+  if (!demoSessionManager.isEnabled()) {
+    return requireJwtAuth(req, res, next);
+  }
+  
+  let token = req.headers.authorization?.replace('Bearer ', '');
+  if (!token) {
+    const cookies = require('cookie');
+    const cookieHeader = req.headers.cookie;
+    if (cookieHeader) {
+      const parsedCookies = cookies.parse(cookieHeader);
+      token = parsedCookies.demo_token;
+    }
+  }
+
+  if (!token) {
+    return requireJwtAuth(req, res, next);
+  }
+
+  try {
+    const session = await demoSessionManager.validateToken(token);
+    if (session) {
+      req.demoSession = session;
+      req.user = {
+        id: `demo-${session.id}`,
+        _id: `demo-${session.id}`,
+        name: 'Demo User',
+        email: 'demo@example.com',
+        isDemo: true,
+      };
+      return next();
+    }
+  } catch (e) {
+    // continue to JWT auth if demo auth fails
+  }
+
+  return requireJwtAuth(req, res, next);
+};
+
 /**
  * Open Responses API routes (API key authentication handled in route file)
  * Mounted at /agents/v1/responses (full path: /api/agents/v1/responses)
@@ -39,7 +80,7 @@ router.use('/v1/responses', responses);
  */
 router.use('/v1', openai);
 
-router.use(requireJwtAuth);
+router.use(optionalDemoAuth);
 router.use(checkBan);
 router.use(uaParser);
 
@@ -326,6 +367,8 @@ if (isEnabled(LIMIT_MESSAGE_IP)) {
 if (isEnabled(LIMIT_MESSAGE_USER)) {
   chatRouter.use(messageUserLimiter);
 }
+
+chatRouter.use(demoMessageLimiter);
 
 chatRouter.use('/', chat);
 router.use('/chat', chatRouter);
