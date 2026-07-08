@@ -464,6 +464,25 @@ class BaseClient {
      */
     const parentMessageId = isEdited ? head : userMessage.messageId;
     this.parentMessageId = parentMessageId;
+    
+    try {
+      const { buildManaPrompt } = require('@librechat/api');
+      if (typeof buildManaPrompt === 'function') {
+        const manaPromptText = await buildManaPrompt(this.user, "");
+        if (manaPromptText && manaPromptText.trim()) {
+           this.currentMessages.unshift({
+             role: 'system',
+             text: manaPromptText,
+             content: manaPromptText,
+             messageId: 'mana-system-prompt',
+             parentMessageId: Constants.NO_PARENT,
+           });
+        }
+      }
+    } catch (e) {
+      logger.error('[MANA] error injecting prompt:', e);
+    }
+
     let {
       prompt: payload,
       tokenCountMap,
@@ -699,7 +718,17 @@ class BaseClient {
       responseMessage,
       saveOptions,
       user,
-    );
+    ).then((saved) => {
+      try {
+        const { runAcquisitionEngine } = require('@librechat/api');
+        if (typeof runAcquisitionEngine === 'function') {
+          runAcquisitionEngine(this.user, userMessage.text, responseMessage.text, conversationId).catch((e) => logger.error('[MANA] async error:', e));
+        }
+      } catch (err) {
+        logger.error('[MANA] Failed to load acquisition engine:', err);
+      }
+      return saved;
+    });
     this.savedMessageIds.add(responseMessage.messageId);
     delete responseMessage.tokenCount;
     return responseMessage;
